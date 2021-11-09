@@ -13,13 +13,7 @@ private:
     vector<vector<double>> matrixA;
     vector<vector<double>> matrixL;
     vector<vector<double>> matrixU;
-
-    //实现稀疏矩阵的存储
-    void setMatrixByCoordinate(int, int, double);
-
-    //用于LU分解
-    double sumLktUtj(int, int);
-    double sumLjtUtk(int, int);
+    void printMatrix(vector<vector<int>>);
 public:
     //矩阵类构造函数
     Matrix();
@@ -35,6 +29,10 @@ public:
     double getDetA();
     //矩阵平移
     void plusIdentityMatrix(double);
+
+    void printMatrix();
+
+    void hessenbergMat();
 };
 
 
