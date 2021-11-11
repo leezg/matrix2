@@ -6,7 +6,7 @@
 
 void Matrix::hessenbergMat() {
     for (int r = 0; r < maxLength -2; r++) {
-        zeroMatrixA();
+        zeroMatrix(matrixA);
         vector<double> vectorU;
         vector<double> vectorP;
         vector<double> vectorQ;
@@ -22,8 +22,9 @@ void Matrix::hessenbergMat() {
             continue;
         } else {
             d += matrixA[r + 1][r] * matrixA[r + 1][r];
-            d = pow(d, 0.5);
+            d = sqrt(d);
             if (matrixA[r + 1][r] != 0) {
+                //TODO: 错误判断
                 c = (matrixA[r + 1][r] < 0) * d;
             } else {
                 c = d;
@@ -56,6 +57,6 @@ void Matrix::hessenbergMat() {
             }
         }
     }
-    zeroMatrixA();
+    zeroMatrix(matrixA);
     printMatrix();
 }

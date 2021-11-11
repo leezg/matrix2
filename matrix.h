@@ -5,16 +5,19 @@
 #ifndef MATRIX_MATRIX_H
 #define MATRIX_MATRIX_H
 
-#include "usedPackage.h"
+#include "matrixOperation.h"
 
 class Matrix {
 private:
     //存储矩阵A及LU分解得到的两个矩阵
     vector<vector<double>> matrixA;
-    vector<vector<double>> matrixL;
-    vector<vector<double>> matrixU;
-    void printMatrix(vector<vector<int>>);
-    void zeroMatrixA();
+    vector<vector<double>> matrixQ;
+    vector<vector<double>> matrixR;
+    vector<vector<double>> matrixQR;
+    void printMatrix(vector<vector<double>>);
+    void zeroMatrix(vector<vector<double>>&);
+    void matrixMult(vector<vector<double>>&, vector<vector<double>>&, vector<vector<double>>&);
+    void initQR();
 public:
     //矩阵类构造函数
     Matrix();
@@ -34,6 +37,8 @@ public:
     void printMatrix();
     //求拟上三角矩阵
     void hessenbergMat();
+
+    void getQR();
 };
 
 

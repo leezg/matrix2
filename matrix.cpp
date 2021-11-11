@@ -42,6 +42,16 @@ vector<double> Matrix::matrixMultArr(vector<double> arr) {
     return ans;
 }
 
+void Matrix::matrixMult(vector<vector<double>>& ma, vector<vector<double>>& mb, vector<vector<double>>& ms)  {
+    for (int i = 0; i < maxLength; i++) {
+        for (int j = 0; j < maxLength; j++) {
+            for (int k = 0; k < maxLength; k++) {
+                ms[i][j] += ma[i][k] * mb[k][j];
+            }
+        }
+    }
+}
+
 void Matrix::plusIdentityMatrix(double times) {
     for (int i = 0; i < matrixA.size(); i++) {
         matrixA[i][2] += times;
@@ -59,7 +69,7 @@ void Matrix::printMatrix() {
     cout << numA[maxLength - 1] << endl;
 }
 
-void Matrix::printMatrix(vector<vector<int>> matrixA) {
+void Matrix::printMatrix(vector<vector<double>> matrixA) {
     cout << numA[0] << endl;
     for (int i = 0; i < maxLength; i++) {
         for (int j = 0; j < 5; j++) {
@@ -70,11 +80,11 @@ void Matrix::printMatrix(vector<vector<int>> matrixA) {
     cout << numA[maxLength - 1] << endl;
 }
 
-void Matrix::zeroMatrixA() {
+void Matrix::zeroMatrix(vector<vector<double>> &matrix) {
     for(int i = 0; i < maxLength; i++) {
         for (int j = 0; j < maxLength; j++) {
-            if (abs(matrixA[i][j])  < E) {
-                matrixA[i][j] = 0;
+            if (abs(matrix[i][j])  < E) {
+                matrix[i][j] = 0;
             }
         }
     }

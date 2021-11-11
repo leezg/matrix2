@@ -18,4 +18,6 @@ bool checkE(double, double);
 //选定初始迭代向量
 vector<double> initU(int);
 
+double sgn(double);
+
 #endif //MATRIX_MATRIXOPERATION_H
