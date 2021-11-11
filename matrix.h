@@ -14,6 +14,7 @@ private:
     vector<vector<double>> matrixL;
     vector<vector<double>> matrixU;
     void printMatrix(vector<vector<int>>);
+    void zeroMatrixA();
 public:
     //矩阵类构造函数
     Matrix();
@@ -31,7 +32,7 @@ public:
     void plusIdentityMatrix(double);
 
     void printMatrix();
-
+    //求拟上三角矩阵
     void hessenbergMat();
 };
 
