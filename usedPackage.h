@@ -10,14 +10,14 @@
 #include <iostream>
 #define E pow(10, -12)
 #define maxLength 10
-#define maxIterTimes 10000
+#define maxIterTimes 1000
 
 using namespace std;
 
 
-struct Lambda {
-    double lambda1;
-    double lambda501;
+struct ComplexNumber {
+    double Re;
+    double Im;
 };
 
 

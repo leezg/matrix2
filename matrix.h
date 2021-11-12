@@ -18,6 +18,9 @@ private:
     void zeroMatrix(vector<vector<double>>&);
     void matrixMult(vector<vector<double>>&, vector<vector<double>>&, vector<vector<double>>&);
     void initQR();
+    void initMatrixA(vector<vector<double>>&);
+    void iterate(vector<vector<double>>&, int);
+    void maxline(vector<vector<double>>&, int);
 public:
     //矩阵类构造函数
     Matrix();
@@ -39,6 +42,10 @@ public:
     void hessenbergMat();
 
     void getQR();
+
+    void QRMethod();
+
+    void gauss(double);
 };
 
 
