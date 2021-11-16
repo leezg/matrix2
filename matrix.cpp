@@ -9,33 +9,10 @@ Matrix::Matrix() { //矩阵初始化
     initMatrixA(matrixA);
 }
 
-double Matrix::getMatrixByCoordinate(int i_, int j_) { //根据原坐标取值
-    if (i_ < 0 || j_ < 0 || i_ >= maxLength || j_ >= maxLength) {
-        return 0;
-    }
-    int i = i_;
-    int j = j_ - i_ + 2;
-    if (j < 0 || j >= 5) {
-        return 0;
-    }
-    return matrixA[i][j];
-}
-
-vector<double> Matrix::matrixMultArr(vector<double> arr) {
-    vector<double> ans;
-    for (int i = 0; i < maxLength; i++) {
-        double sum = 0;
-        for (int j = 0; j < maxLength; j++) {
-            sum += getMatrixByCoordinate(i, j) * arr[j];
-        }
-        ans.push_back(sum);
-    }
-    return ans;
-}
-
 void Matrix:: matrixMult(vector<vector<double>>& ma, vector<vector<double>>& mb, vector<vector<double>>& ms)  {
     for (int i = 0; i < maxLength; i++) {
         for (int j = 0; j < maxLength; j++) {
+            ms[i][j] = 0;
             for (int k = 0; k < maxLength; k++) {
                 ms[i][j] += ma[i][k] * mb[k][j];
             }
@@ -43,32 +20,22 @@ void Matrix:: matrixMult(vector<vector<double>>& ma, vector<vector<double>>& mb,
     }
 }
 
-void Matrix::plusIdentityMatrix(double times) {
-    for (int i = 0; i < matrixA.size(); i++) {
-        matrixA[i][2] += times;
-    }
-}
-
 void Matrix::printMatrix() {
-    cout << numA[0] << endl;
     for (int i = 0; i < maxLength; i++) {
-        for (int j = 0; j < 5; j++) {
-            printf("%20.12lf", matrixA[i][j]);
+        for (int j = 0; j < maxLength; j++) {
+            printf("%20.12e", matrixA[i][j]);
         }
         cout << endl;
     }
-    cout << numA[maxLength - 1] << endl;
 }
 
 void Matrix::printMatrix(vector<vector<double>> matrixA) {
-    cout << numA[0] << endl;
     for (int i = 0; i < maxLength; i++) {
-        for (int j = 0; j < 5; j++) {
-            printf("%20.12lf", matrixA[i][j]);
+        for (int j = 0; j < maxLength; j++) {
+            printf("%20.12e", matrixA[i][j]);
         }
         cout << endl;
     }
-    cout << numA[maxLength - 1] << endl;
 }
 
 void Matrix::zeroMatrix(vector<vector<double>> &matrix) {
@@ -93,7 +60,7 @@ void Matrix::gauss(double lambda) {
     }
 
     for (int k = 0; k < maxLength - 1; k++) {
-        maxline(matrixA, k);
+        maxLine(matrixA, k);
         for (int i = k + 1; i < maxLength; i++) {
             double m;
             m = matrixA[i][k] / matrixA[k][k];
@@ -126,16 +93,16 @@ void Matrix::initMatrixA(vector<vector<double>> &matrixA) {
     for (int i = 0; i < maxLength; i++) {
         matrixA.push_back(vector<double>());
         for (int j = 0; j < maxLength; j++) {
-            if (i == j) {
-                matrixA[i].push_back(sin(0.5 * i + 0.2 * j));
+            if (i != j) {
+                matrixA[i].push_back(sin(0.5 * (i + 1) + 0.2 * (j + 1)));
             } else {
-                matrixA[i].push_back(1.52 * cos(i + 1.2 * j));
+                matrixA[i].push_back(1.52 * cos((i + 1) + 1.2 * (j + 1)));
             }
         }
     }
 }
 
-void Matrix::maxline(vector<vector<double>> &matrixA, int k) {
+void Matrix::maxLine(vector<vector<double>> &matrixA, int k) {
     double c;
     int i, M;
     M = k;

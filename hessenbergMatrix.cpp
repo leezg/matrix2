@@ -25,7 +25,7 @@ void Matrix::hessenbergMat() {
             d = sqrt(d);
             if (matrixA[r + 1][r] != 0) {
                 //TODO: 错误判断
-                c = (matrixA[r + 1][r] < 0) * d;
+                c = -abs(matrixA[r + 1][r]) / matrixA[r + 1][r] * d;
             } else {
                 c = d;
             }
@@ -46,17 +46,19 @@ void Matrix::hessenbergMat() {
                 }
             }
             for (int i = 0; i < maxLength; i++) {
-                t += vectorP[i] + vectorU[i] /h;
+                t += vectorP[i] * vectorU[i] /h;
             }
             for (int i = 0; i < maxLength; i++) {
-                vectorW.push_back(vectorP[i] - t * vectorU[i]);
+                vectorW.push_back(vectorQ[i] - t * vectorU[i]);
             }
             for (int i = 0; i < maxLength; i++) {
-                for (int j = 0; j < maxLength; j++)
+                for (int j = 0; j < maxLength; j++) {
                     matrixA[i][j] -= (vectorW[i] * vectorU[j] + vectorU[i] * vectorP[j]);
+                }
             }
         }
     }
     zeroMatrix(matrixA);
+    cout << "A(n-1)" << endl;
     printMatrix();
 }

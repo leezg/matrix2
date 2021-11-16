@@ -23,7 +23,6 @@ void Matrix::initQR() {
 }
 
 void Matrix::getQR() {
-//    double c, d, h, w[maxLength], p[maxLength], u[maxLength];
     initQR();
     for(int r = 0; r < maxLength - 1; r++){
         double d = 0;
@@ -79,8 +78,11 @@ void Matrix::getQR() {
     zeroMatrix(matrixQ);
     matrixMult(matrixR, matrixQ, matrixQR);
     zeroMatrix(matrixQR);
-    printMatrix(matrixR);
+    cout << "Q" << endl;
     printMatrix(matrixQ);
+    cout << "R" << endl;
+    printMatrix(matrixR);
+    cout << "RQ" << endl;
     printMatrix(matrixQR);
 }
 
@@ -112,7 +114,24 @@ void Matrix::QRMethod() {
             r++;
         } else {
             if (m == 1) {
-                det = (matrixA[m][m] + matrixA[m - 1][m - 1])*(matrixA[m][m] + matrixA[m - 1][m - 1])
+                det = (matrixA[m][m] + matrixA[m - 1][m - 1]) * (matrixA[m][m] + matrixA[m - 1][m - 1])
+                        - 4 * (matrixA[m][m] * matrixA[m - 1][m - 1] - matrixA[m - 1][m] * matrixA[m][m - 1]);
+                if (det > 0) {
+                    L[r].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2 + sqrt(det) / 2;
+                    L[r].Im = 0;
+                    L[r + 1].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2 - sqrt(det) / 2;
+                    L[r + 1].Im = 0;
+                } else {
+                    L[r].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2;
+                    L[r].Im = sqrt(-det) / 2;
+                    L[r + 1].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2;
+                    L[r + 1].Im = -sqrt(-det) / 2;
+                }
+                m -= 2;
+                r += 2;
+                continue;
+            } else if (abs(matrixA[m - 1][m - 2]) < E) {
+                det = (matrixA[m][m] + matrixA[m - 1][m - 1]) * (matrixA[m][m] + matrixA[m - 1][m - 1])
                         - 4 * (matrixA[m][m] * matrixA[m - 1][m - 1] - matrixA[m - 1][m] * matrixA[m][m - 1]);
                 if (det > 0) {
                     L[r].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2 + sqrt(det) / 2;
@@ -129,26 +148,7 @@ void Matrix::QRMethod() {
                 m -= 2;
                 r += 2;
                 continue;
-            }
-            else if (abs(matrixA[m - 1][m - 2]) < E) {
-                det = (matrixA[m][m] + matrixA[m - 1][m - 1])*(matrixA[m][m] + matrixA[m - 1][m - 1]) - 4 * (matrixA[m][m] * matrixA[m - 1][m - 1] - matrixA[m - 1][m] * matrixA[m][m - 1]);
-                if (det>0) {
-                    L[r].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2 + sqrt(det) / 2;
-                    L[r].Im = 0;
-                    L[r + 1].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2 - sqrt(det) / 2;
-                    L[r + 1].Im = 0;
-                }
-                else {
-                    L[r].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2;
-                    L[r].Im = sqrt(-det) / 2;
-                    L[r + 1].Re = (matrixA[m][m] + matrixA[m - 1][m - 1]) / 2;
-                    L[r + 1].Im = -sqrt(-det) / 2;
-                }
-                m -= 2;
-                r += 2;
-                continue;
-            }
-            else {
+            } else {
                 double s;
                 double t;
                 s = matrixA[m - 1][m - 1] + matrixA[m][m];
@@ -183,19 +183,18 @@ void Matrix::QRMethod() {
 }
 
 void Matrix::iterate(vector<vector<double>> &matrixM, int m) {
-//    double c, d, h, t, u[10], v[10], p[10], q[10], w[10];
     vector<double> vectorU = vector<double>(maxLength);
     vector<double> vectorV = vector<double>(maxLength);
     vector<double> vectorP = vector<double>(maxLength);
     vector<double> vectorQ = vector<double>(maxLength);
-    vector<double> vectorW;
+    vector<double> vectorW = vector<double>(maxLength);
     for (int r = 0; r < m - 1; r++) {
         zeroMatrix(matrixM);
         double d = 0;
         for (int i = r + 1; i < m; i++) {
             d += matrixM[i][r] * matrixM[i][r];
         }
-        if (d == 0) {
+        if (abs(d) == 0) {
             continue;
         } else {
             double c;
@@ -203,14 +202,14 @@ void Matrix::iterate(vector<vector<double>> &matrixM, int m) {
             d += matrixM[r][r] * matrixM[r][r];
             d = sqrt(d);
             if (matrixM[r][r] != 0) {
-                //TODO: 更改表示方法
-                c = abs(matrixM[r][r]) / matrixM[r][r] * d;
-            }
-
-            else {
+                c = -abs(matrixM[r][r]) / matrixM[r][r] * d;
+            } else {
                 c = d;
             }
             h = c * c - c * matrixM[r][r];
+            for (int i = 0; i < r; i++) {
+                vectorU[i] = 0;
+            }
             vectorU[r] = matrixM[r][r] - c;
             for (int i = r + 1; i < m; i++) {
                 vectorU[i] = matrixM[i][r];
@@ -235,7 +234,7 @@ void Matrix::iterate(vector<vector<double>> &matrixM, int m) {
                 t += vectorP[i] * vectorU[i] / h;
             }
             for (int i = 0; i < m; i++) {
-                vectorW.push_back(vectorP[i] - t * vectorU[i]);
+                vectorW[i] = vectorQ[i] - t * vectorU[i];
             }
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < m; j++) {

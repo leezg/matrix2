@@ -20,22 +20,10 @@ private:
     void initQR();
     void initMatrixA(vector<vector<double>>&);
     void iterate(vector<vector<double>>&, int);
-    void maxline(vector<vector<double>>&, int);
+    void maxLine(vector<vector<double>>&, int);
 public:
     //矩阵类构造函数
     Matrix();
-    //实现稀疏矩阵的读取
-    double getMatrixByCoordinate(int, int);
-    //矩阵与向量相乘
-    vector<double> matrixMultArr(vector<double>);
-    //矩阵A的LU分解
-    void LU_Factorization();
-    //解方程
-    vector<double> LU_Solve(vector<double>);
-    //计算detA
-    double getDetA();
-    //矩阵平移
-    void plusIdentityMatrix(double);
 
     void printMatrix();
     //求拟上三角矩阵

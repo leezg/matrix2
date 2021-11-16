@@ -1,7 +1,9 @@
-#include "usedPackage.h"
+#include "matrix.h"
 
 int main() {
-
-    std::cout << "Hello, World!" << std::endl;
+    Matrix matrix = Matrix();
+    matrix.hessenbergMat();
+    matrix.getQR();
+    matrix.QRMethod();
     return 0;
 }
