@@ -78,11 +78,14 @@ void Matrix::getQR() {
     zeroMatrix(matrixQ);
     matrixMult(matrixR, matrixQ, matrixQR);
     zeroMatrix(matrixQR);
-    cout << "Q" << endl;
+//    cout << "Q" << endl;
+    fprintf(fp, "Q,\n");
     printMatrix(matrixQ);
-    cout << "R" << endl;
+//    cout << "R" << endl;
+    fprintf(fp, "R,\n");
     printMatrix(matrixR);
-    cout << "RQ" << endl;
+//    cout << "RQ" << endl;
+    fprintf(fp, "RQ\n");
     printMatrix(matrixQR);
 }
 
@@ -167,17 +170,17 @@ void Matrix::QRMethod() {
         }
     }
     zeroMatrix(matrixA);
-    printf("after QR method\n");
+    fprintf(fp, "after QR method\n");
     printMatrix(matrixA);
 
     for (int r = 0; r < 10; r++) {
-        printf("\n");
+        fprintf(fp, "\n");
         if (L[r].Im == 0) {
-            printf("lambda[%d] = (%.12e + i*%.12e)\n", r + 1, L[r].Re, L[r].Im);
+            fprintf(fp, "lambda[%d] = (%.12e + i*%.12e)\n", r + 1, L[r].Re, L[r].Im);
             gauss(L[r].Re);
         }
         else {
-            printf("lambda[%d] = (%.12e + i*%.12e)\n", r + 1, L[r].Re, L[r].Im);
+            fprintf(fp, "lambda[%d] = (%.12e + i*%.12e)\n", r + 1, L[r].Re, L[r].Im);
         }
     }
 }

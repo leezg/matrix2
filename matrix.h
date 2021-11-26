@@ -28,6 +28,7 @@ private:
     void iterate(vector<vector<double>>&, int);
     ////Gauss消元法中的选主元
     void maxLine(vector<vector<double>>&, int);
+    FILE* fp;
 public:
     //矩阵类构造函数
     Matrix();

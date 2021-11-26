@@ -8,6 +8,7 @@
 #include <math.h>
 #include <vector>
 #include <iostream>
+#include <cstdio>
 #define E pow(10, -12)
 #define maxLength 10
 #define maxIterTimes 1000
@@ -20,5 +21,7 @@ struct ComplexNumber {
 };
 
 double sgn(double);
+
+const static string answerPath = "C:\\Users\\lee\\Desktop\\math\\matrix2\\answer.txt";
 
 #endif //MATRIX_MATRIXOPERATION_H

@@ -7,6 +7,7 @@ vector<double> numA;
 
 Matrix::Matrix() { //矩阵初始化
     initMatrixA(matrixA);
+    fp = fopen(answerPath.c_str(), "w+");
 }
 
 void Matrix:: matrixMult(vector<vector<double>>& ma, vector<vector<double>>& mb, vector<vector<double>>& ms)  {
@@ -23,18 +24,24 @@ void Matrix:: matrixMult(vector<vector<double>>& ma, vector<vector<double>>& mb,
 void Matrix::printMatrix() {
     for (int i = 0; i < maxLength; i++) {
         for (int j = 0; j < maxLength; j++) {
-            printf("%20.12e", matrixA[i][j]);
+            fprintf(fp,"%20.12e,", matrixA[i][j]);
+            if (j == 4) {
+                fprintf(fp, "\n");
+            }
         }
-        cout << endl;
+        fprintf(fp, "\n");
     }
 }
 
 void Matrix::printMatrix(vector<vector<double>> matrixA) {
     for (int i = 0; i < maxLength; i++) {
         for (int j = 0; j < maxLength; j++) {
-            printf("%20.12e", matrixA[i][j]);
+            fprintf(fp,"%20.12e,", matrixA[i][j]);
+            if (j == 4) {
+                fprintf(fp, "\n");
+            }
         }
-        cout << endl;
+        fprintf(fp, "\n");
     }
 }
 
@@ -55,7 +62,6 @@ void Matrix::gauss(double lambda) {
 
     for (int i = 0; i < maxLength; i++) {
         matrixA[i][i] -= lambda;
-        //TODO: fix bugs
         matrixA[i][maxLength] = 0;
     }
 
@@ -75,18 +81,17 @@ void Matrix::gauss(double lambda) {
         double sigma = 0;
         for (int j = k + 1; j < maxLength; j++)
             sigma += matrixA[k][j] * vectorX[j];
-        //TODO: bugs
         vectorX[k] = (matrixA[k][maxLength] - sigma) / matrixA[k][k];
     }
     for (int i = 0; i < maxLength; i++) {
         t += vectorX[i] * vectorX[i];
     }
     t = sqrt(t);
-    printf("eigenvector = ( ");
+    fprintf(fp, "eigenvector = ( ");
     for (int i = 0; i < maxLength; i++) {
-        printf("%.12e ", vectorX[i]/t);
+        fprintf(fp,"%.12e ", vectorX[i]/t);
     }
-    printf(")\n");
+    fprintf(fp, ")\n");
 }
 
 void Matrix::initMatrixA(vector<vector<double>> &matrixA) {

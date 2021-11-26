@@ -24,7 +24,6 @@ void Matrix::hessenbergMat() {
             d += matrixA[r + 1][r] * matrixA[r + 1][r];
             d = sqrt(d);
             if (matrixA[r + 1][r] != 0) {
-                //TODO: 错误判断
                 c = -abs(matrixA[r + 1][r]) / matrixA[r + 1][r] * d;
             } else {
                 c = d;
@@ -59,6 +58,7 @@ void Matrix::hessenbergMat() {
         }
     }
     zeroMatrix(matrixA);
-    cout << "A(n-1)" << endl;
+//    cout << "A(n-1)" << endl;
+    fprintf(fp, "A(n-1)\n");
     printMatrix();
 }
